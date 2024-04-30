@@ -1,8 +1,6 @@
 ﻿using GeoApi.Domain.Interfaces.Repositories;
 using GeoApi.Domain.Interfaces.Services;
 using GeoApi.Domain.Models.Countries;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace GeoApi.Infrastructure.Externals.GeoDB
 {
@@ -27,19 +25,11 @@ namespace GeoApi.Infrastructure.Externals.GeoDB
 
             var requestMessage = _httpService.CreateRequestMessage(HttpMethod.Get, requestUri);
 
-            try
-            {
-                var countriesList = await _httpService.SendRequestAsync(client, requestMessage);
+            var countriesList = await _httpService.SendRequestAsync(client, requestMessage);
 
-                var result = JsonConvert.DeserializeObject<CountriesModel>(countriesList);
+            var result = ValidateRequests.Validate<CountriesModel>(countriesList);
 
-                return result!;
-
-            }
-            catch (Exception ex)
-            {
-                return new();
-            }
+            return result;
         }
     }
 }

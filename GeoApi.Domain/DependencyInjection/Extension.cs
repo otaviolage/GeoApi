@@ -16,7 +16,6 @@ namespace GeoApi.Domain.DependencyInjection
 
             services.AddHttpClient("GeoDBClient", client =>
             {
-                client.DefaultRequestHeaders.Accept.Clear();
                 client.BaseAddress = new Uri(configuration["GeoDB:BaseUrl"]!);
                 client.DefaultRequestHeaders.Add("X-RapidAPI-Key", configuration["GeoDB:Key"]!);
             });

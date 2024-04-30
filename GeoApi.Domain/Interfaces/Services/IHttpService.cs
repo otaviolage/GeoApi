@@ -1,3 +1,5 @@
+using FluentResults;
+
 namespace GeoApi.Domain.Interfaces.Services
 {
     public interface IHttpService
@@ -8,7 +10,7 @@ namespace GeoApi.Domain.Interfaces.Services
             IDictionary<string, string> headers = null,
             string? token = null);
 
-        Task<string> SendRequestAsync(HttpClient client, HttpRequestMessage httpRequestMessage);
+        Task<Result<string>> SendRequestAsync(HttpClient client, HttpRequestMessage httpRequestMessage);
         void SendRequest(HttpClient client, HttpRequestMessage httpRequestMessage);
     }
 }

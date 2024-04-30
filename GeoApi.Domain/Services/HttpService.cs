@@ -1,10 +1,10 @@
-﻿using GeoApi.Domain.Enums;
+﻿using FluentResults;
 using GeoApi.Domain.Exceptions;
 using GeoApi.Domain.Interfaces.Services;
 
 namespace GeoApi.Domain.Services
 {
-    internal class HttpService : IHttpService
+    public class HttpService : IHttpService
     {
         public HttpRequestMessage CreateRequestMessage(
             HttpMethod method,
@@ -28,16 +28,16 @@ namespace GeoApi.Domain.Services
             return requestMessage;
         }
 
-        public virtual async Task<string> SendRequestAsync(HttpClient client, HttpRequestMessage httpRequestMessage)
+        public virtual async Task<Result<string>> SendRequestAsync(HttpClient client, HttpRequestMessage httpRequestMessage)
         {
             var result = await client.SendAsync(httpRequestMessage);
 
             var response = await result.Content.ReadAsStringAsync();
 
             if (!result.IsSuccessStatusCode)
-                throw new ErrorException((ErrorCode)result.StatusCode, response!);
+                return Result.Fail(new ResultError(response, result.StatusCode));
 
-            return response;
+            return Result.Ok(response);
         }
 
         public virtual void SendRequest(HttpClient client, HttpRequestMessage httpRequestMessage) =>

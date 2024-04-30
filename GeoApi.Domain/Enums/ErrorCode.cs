@@ -6,6 +6,7 @@ namespace GeoApi.Domain.Enums
     {
         NotFound = HttpStatusCode.NotFound,
         BadRequest = HttpStatusCode.BadRequest,
-        Unauthorized = HttpStatusCode.Unauthorized
+        Unauthorized = HttpStatusCode.Unauthorized,
+        UnprocessableContent = HttpStatusCode.UnprocessableContent
     }
 }
